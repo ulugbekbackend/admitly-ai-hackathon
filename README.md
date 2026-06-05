@@ -2,6 +2,17 @@
 
 > O'zbek talabalari uchun xalqaro grant va universitetlarga ariza topshirishni osonlashtiradigan AI yordamchi platforma.
 
+## Muammo va Yechim
+
+O'zbekistonda har yili minglab talabalar xalqaro grant va universitetlarga ariza topshirishga harakat qiladi. Ammo bu jarayon juda murakkab:
+
+- Qaysi dasturga mos ekanligini bilmaydilar
+- Qanday hujjatlar kerakligini aniqlay olmaydilar
+- Esse yozishda qayerda xato qilayotganini tushunmaydilar
+- Har bir dastur uchun talablar boshqacha bo'ladi
+
+**Admitly** shu muammoni hal qiladi — talabaning profili (GPA, IELTS, tajriba) asosida dasturlarga mos kelish darajasini hisoblaydi, hujjatlar ro'yxatini avtomatik tuzadi va esseni AI orqali tahlil qilib, aniq kamchilik va kuchli tomonlarni ko'rsatadi.
+
 ## Texnologiyalar
 
 | Qatlam | Stack |
@@ -13,13 +24,21 @@
 
 ## Asosiy imkoniyatlar
 
-- **Dasturlar katalogi** — grant va universitetlar ro'yxati (filtr, qidiruv, deadline hisoblagich)
-- **Ariza va hujjatlar** — dasturga ariza, hujjat checklisti, fayl yuklash (PDF/DOCX)
-- **Mos kelish bali** — 5 mezon: GPA, Til bilimi, Tajriba, Esse, Tavsiya xati
-- **AI esse tahlili** — Gemini AI orqali 🔴🟡🟢 rangli inline izohlar, kuchli/zaif tomonlar tahlili (o'zbek tilida)
-- **Kredit tizimi** — Free (5 kredit) va Premium (100 kredit/oy) tariflar
-- **Esse tarixi** — barcha tahlil natijalari saqlanadi va ko'rib chiqiladi
-- **JWT autentifikatsiya** — access/refresh token, avtomatik yangilash
+### Foydalanuvchi uchun
+- **Dasturlar katalogi** — 7 ta xalqaro grant va universitetlar ro'yxati: DAAD, Chevening, Fulbright, Erasmus+ va boshqalar. Filtr (grant/universitet), qidiruv, deadline hisoblagich
+- **Profil va ball** — GPA, IELTS, ish tajribasi kiritiladi; tizim avtomatik mos kelish foizini hisoblaydi
+- **Ariza va hujjat checklisti** — dasturga ariza yaratiladi, kerakli hujjatlar ro'yxati avtomatik tuziladi, fayl yuklash (PDF/DOCX)
+- **AI esse tahlili** — esse matnini kiritasiz, Gemini AI o'zbek tilida tahlil qiladi: umumiy ball (0–100), inline rangli izohlar (🔴 jiddiy, 🟡 tavsiya, 🟢 kuchli), yetishmayotgan elementlar, umumiy xulosa
+- **Esse tarixi** — barcha tahlillar saqlanib, istalgan vaqt ko'rib chiqiladi
+- **Kredit tizimi** — ro'yxatdan o'tishda 5 ta bepul kredit; Premium (100 kredit/oy) yoki kredit to'plamlari sotib olish imkoniyati
+
+### Texnik
+- REST API bilan to'liq ajratilgan arxitektura (Django + React)
+- JWT autentifikatsiya: access token (1 soat) + refresh token (7 kun), avtomatik yangilash
+- Gemini API ga parallel so'rovlarda kredit sarfi race condition dan himoyalangan (atomic F() update)
+- Fayl yuklash: `multipart/form-data`, 10 MB chegara, PDF/DOC/DOCX validatsiya
+- Rate limiting: esse tahlili 30 marta/kun (foydalanuvchi bo'yicha)
+- Barcha sahifalar responsive dizayn
 
 ## Ishga tushirish
 
@@ -147,15 +166,41 @@ admitly/
 │   ├── apps/
 │   │   ├── accounts/     # Foydalanuvchi modeli, JWT, kredit tizimi
 │   │   ├── programs/     # Grant/universitet modeli va fixture
-│   │   ├── applications/ # Ariza va hujjat modeli
-│   │   └── ai/           # Gemini integratsiyasi, esse tahlili
-│   ├── config/           # Django sozlamalari
-│   └── core/             # Permissions, pagination, exception handler
+│   │   ├── applications/ # Ariza va hujjat modeli, fayl yuklash
+│   │   └── ai/           # Gemini integratsiyasi, esse tahlili servisi
+│   ├── config/           # Django sozlamalari (split: base/dev/prod)
+│   └── core/             # IsOwner permission, pagination, exception handler
 └── frontend/
     └── src/
-        ├── api/          # Axios client, API funksiyalari
-        ├── components/   # UI komponentlari
-        ├── hooks/        # TanStack Query hooks
-        ├── pages/        # Sahifalar
-        └── store/        # Zustand state (auth, application)
+        ├── api/          # Axios client (JWT interceptor), API funksiyalari
+        ├── components/   # UI: layout, checklist, essay, dashboard, pricing
+        ├── hooks/        # TanStack Query hooks (server state)
+        ├── pages/        # Sahifalar: Landing, Dashboard, Programs, Essay...
+        └── store/        # Zustand: auth token, active application
+
 ```
+
+## Qo'llanilgan dasturlar (Fixture)
+
+| Dastur | Mamlakat | Tur |
+|---|---|---|
+| DAAD Research Grant | Germaniya | Grant |
+| Chevening Scholarship | Buyuk Britaniya | Grant |
+| Fulbright Program | AQSh | Grant |
+| Erasmus+ | Yevropa | Grant |
+| Bologna University | Italiya | Universitet |
+| University of Warsaw | Polsha | Universitet |
+| Nazarbayev University | Qozog'iston | Universitet |
+
+## Skrinshot
+
+| Sahifa | Tavsif |
+|---|---|
+| Landing | Loyiha taqdimoti, kirish/ro'yxat tugmalari |
+| Dashboard | Mos kelish bali, hujjat holati, vazifalar |
+| Dasturlar | Katalog, filtr, qidiruv, deadline |
+| Hujjatlar | Checklist, fayl yuklash, holat o'zgartirish |
+| Esse tahlili | Matn kiritish, AI tahlil, rangli izohlar |
+| Mening esseylarim | Tarix, batafsil natijalar |
+| Tariflar | Free/Premium, kredit to'plamlari |
+| Profil | GPA, IELTS, tajriba, ism |
