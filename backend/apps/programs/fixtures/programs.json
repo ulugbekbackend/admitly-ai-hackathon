@@ -1,0 +1,193 @@
+[
+  {
+    "model": "programs.program",
+    "pk": 1,
+    "fields": {
+      "name": "Fulbright Scholarship",
+      "type": "grant",
+      "country": "United States",
+      "flag_emoji": "🇺🇸",
+      "deadline": "2026-10-01",
+      "required_documents": [
+        "Personal Statement",
+        "Study/Research Objective",
+        "CV / Resume",
+        "Three Recommendation Letters",
+        "Official Transcripts",
+        "English Proficiency Certificate (IELTS/TOEFL)",
+        "Passport Copy",
+        "Research Proposal",
+        "Writing Sample"
+      ],
+      "min_gpa": "3.00",
+      "min_ielts": "7.0",
+      "description": "The Fulbright Program is the flagship international educational exchange program sponsored by the U.S. government.",
+      "website": "https://foreign.fulbrightonline.org/",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "programs.program",
+    "pk": 2,
+    "fields": {
+      "name": "Chevening Scholarship",
+      "type": "grant",
+      "country": "United Kingdom",
+      "flag_emoji": "🇬🇧",
+      "deadline": "2026-11-05",
+      "required_documents": [
+        "Personal Statement",
+        "Two Reference Letters",
+        "Academic Transcripts",
+        "IELTS Certificate (min 6.5)",
+        "Passport Copy",
+        "CV",
+        "Work Experience Evidence",
+        "Leadership Statement"
+      ],
+      "min_gpa": "3.00",
+      "min_ielts": "6.5",
+      "description": "Chevening is the UK government's international awards programme, offering scholarships to outstanding emerging leaders.",
+      "website": "https://www.chevening.org/",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "programs.program",
+    "pk": 3,
+    "fields": {
+      "name": "Erasmus+ Mundus",
+      "type": "grant",
+      "country": "European Union",
+      "flag_emoji": "🇪🇺",
+      "deadline": "2026-01-15",
+      "required_documents": [
+        "Motivation Letter",
+        "CV (Europass format)",
+        "Two Recommendation Letters",
+        "Official Transcripts",
+        "Language Proficiency Certificate",
+        "Passport Copy",
+        "Research Proposal",
+        "Portfolio (for arts programs)"
+      ],
+      "min_gpa": "2.80",
+      "min_ielts": "6.0",
+      "description": "Erasmus Mundus Joint Degrees are integrated international study programmes at master or doctoral level.",
+      "website": "https://erasmus-plus.ec.europa.eu/",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "programs.program",
+    "pk": 4,
+    "fields": {
+      "name": "DAAD Scholarship",
+      "type": "grant",
+      "country": "Germany",
+      "flag_emoji": "🇩🇪",
+      "deadline": "2026-10-15",
+      "required_documents": [
+        "Motivation Letter",
+        "Academic CV",
+        "Two Recommendation Letters",
+        "Official Transcripts",
+        "Language Certificate (German B2 or English C1)",
+        "Passport Copy",
+        "Research Proposal",
+        "Publication List (if applicable)"
+      ],
+      "min_gpa": "2.50",
+      "min_ielts": "6.5",
+      "description": "The German Academic Exchange Service is the world's largest funding organisation for international exchange of students and researchers.",
+      "website": "https://www.daad.de/en/",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "programs.program",
+    "pk": 5,
+    "fields": {
+      "name": "MIT Computer Science PhD",
+      "type": "university",
+      "country": "United States",
+      "flag_emoji": "🏛️",
+      "deadline": "2026-12-15",
+      "required_documents": [
+        "Statement of Purpose",
+        "Three Recommendation Letters",
+        "Official Transcripts (GPA 3.5+)",
+        "GRE Scores",
+        "TOEFL/IELTS Certificate",
+        "CV / Resume",
+        "Research Statement",
+        "Publications or Writing Sample",
+        "Passport Copy"
+      ],
+      "min_gpa": "3.50",
+      "min_ielts": "7.0",
+      "description": "MIT EECS PhD program — one of the most competitive and prestigious computer science doctoral programs in the world.",
+      "website": "https://www.eecs.mit.edu/academics/graduate-programs/phd-program/",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "programs.program",
+    "pk": 6,
+    "fields": {
+      "name": "NUS Graduate Program",
+      "type": "university",
+      "country": "Singapore",
+      "flag_emoji": "🇸🇬",
+      "deadline": "2026-11-30",
+      "required_documents": [
+        "Personal Statement",
+        "Two Recommendation Letters",
+        "Official Transcripts",
+        "IELTS/TOEFL Certificate",
+        "CV / Resume",
+        "Research Proposal",
+        "Passport Copy",
+        "Portfolio (for design programs)"
+      ],
+      "min_gpa": "3.20",
+      "min_ielts": "6.5",
+      "description": "National University of Singapore Graduate Programmes — Asia's leading global university.",
+      "website": "https://www.nus.edu.sg/admissions/graduate",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "programs.program",
+    "pk": 7,
+    "fields": {
+      "name": "KAIST Fellowship",
+      "type": "grant",
+      "country": "South Korea",
+      "flag_emoji": "🇰🇷",
+      "deadline": "2026-09-01",
+      "required_documents": [
+        "Personal Statement",
+        "Two Recommendation Letters",
+        "Official Transcripts",
+        "English Proficiency Certificate",
+        "CV / Resume",
+        "Research Plan",
+        "Passport Copy",
+        "Financial Documents"
+      ],
+      "min_gpa": "3.00",
+      "min_ielts": "6.5",
+      "description": "Korea Advanced Institute of Science and Technology — full scholarship for outstanding international graduate students.",
+      "website": "https://www.kaist.ac.kr/en/",
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  }
+]
