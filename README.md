@@ -1,100 +1,161 @@
-# Admitly
+# Admitly — AI Grant Assistant
 
-AI-powered document preparation platform for Uzbek students applying to international universities and grants.
+> O'zbek talabalari uchun xalqaro grant va universitetlarga ariza topshirishni osonlashtiradigan AI yordamchi platforma.
 
-## Requirements
+## Texnologiyalar
 
-- Node.js 18+
+| Qatlam | Stack |
+|---|---|
+| Frontend | React 19, Vite 6, TailwindCSS v4, TanStack Query v5, Zustand, shadcn/ui |
+| Backend | Django 5.2, Django REST Framework, SimpleJWT |
+| AI | Google Gemini 2.0 Flash |
+| Database | PostgreSQL |
+
+## Asosiy imkoniyatlar
+
+- **Dasturlar katalogi** — grant va universitetlar ro'yxati (filtr, qidiruv, deadline hisoblagich)
+- **Ariza va hujjatlar** — dasturga ariza, hujjat checklisti, fayl yuklash (PDF/DOCX)
+- **Mos kelish bali** — 5 mezon: GPA, Til bilimi, Tajriba, Esse, Tavsiya xati
+- **AI esse tahlili** — Gemini AI orqali 🔴🟡🟢 rangli inline izohlar, kuchli/zaif tomonlar tahlili (o'zbek tilida)
+- **Kredit tizimi** — Free (5 kredit) va Premium (100 kredit/oy) tariflar
+- **Esse tarixi** — barcha tahlil natijalari saqlanadi va ko'rib chiqiladi
+- **JWT autentifikatsiya** — access/refresh token, avtomatik yangilash
+
+## Ishga tushirish
+
+### Talablar
+
 - Python 3.10+
+- Node.js 18+
 - PostgreSQL 14+
 
-## Quick Start
-
-### 1. Clone and install root dependencies
+### 1. Reponi klonlash
 
 ```bash
-npm install
+git clone https://github.com/ulugbekbackend/admitly-ai-hackathon.git
+cd admitly-ai-hackathon
 ```
 
-### 2. Backend setup
+### 2. Backend sozlash
 
 ```bash
 cd backend
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-Copy and configure the backend env file:
+`.env` faylini yaratish:
 
 ```bash
 cp .env.example .env
-# Edit .env — set DB credentials and your ANTHROPIC_API_KEY
+# .env faylini oching va DB ma'lumotlari hamda GEMINI_API_KEY ni kiriting
 ```
 
-Create the database:
+Ma'lumotlar bazasini yaratish va migratsiyalarni ishga tushirish:
 
 ```bash
 psql -U postgres -c "CREATE DATABASE admitly_db;"
-```
-
-Run migrations and load seed data:
-
-```bash
 python manage.py migrate
 python manage.py loaddata apps/programs/fixtures/programs.json
 ```
 
-Create an admin user (optional):
+### 3. Frontend sozlash
 
 ```bash
-python manage.py createsuperuser
-```
-
-### 3. Frontend setup
-
-```bash
-cd frontend
+cd ../frontend
+npm install
 cp .env.example .env
 ```
 
-### 4. Run everything
-
-From the project root:
+### 4. Ishga tushirish
 
 ```bash
-npm run dev
+# Frontend va backend bir vaqtda (frontend papkasidan)
+npm run dev:all
 ```
 
-This starts both servers concurrently:
-- Frontend: http://localhost:5173
-- Backend API: http://localhost:8000
-- Admin panel: http://localhost:8000/admin
+Yoki alohida:
 
-## Environment Variables
+```bash
+# Backend
+cd backend && python manage.py runserver
 
-### backend/.env
+# Frontend (yangi terminal)
+cd frontend && npm run dev
+```
 
-| Variable | Description |
+| Xizmat | URL |
 |---|---|
-| `SECRET_KEY` | Django secret key |
-| `DEBUG` | `True` for development |
-| `DB_NAME` | PostgreSQL database name |
-| `DB_USER` | PostgreSQL username |
-| `DB_PASSWORD` | PostgreSQL password |
-| `DB_HOST` | Database host (default: localhost) |
-| `DB_PORT` | Database port (default: 5432) |
-| `ALLOWED_ORIGINS` | Frontend origin for CORS |
-| `ANTHROPIC_API_KEY` | Your Anthropic API key (from console.anthropic.com) |
+| Frontend | http://localhost:5173 |
+| Backend API | http://localhost:8000/api |
+| Admin panel | http://localhost:8000/admin |
 
-### frontend/.env
+## Muhit o'zgaruvchilari
 
-| Variable | Description |
+### `backend/.env`
+
+| O'zgaruvchi | Tavsif |
 |---|---|
-| `VITE_API_URL` | Backend API base URL |
-| `VITE_APP_NAME` | App display name |
+| `SECRET_KEY` | Django maxfiy kalit (`python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`) |
+| `DEBUG` | `True` (development uchun) |
+| `DB_NAME` | PostgreSQL ma'lumotlar bazasi nomi |
+| `DB_USER` | PostgreSQL foydalanuvchi nomi |
+| `DB_PASSWORD` | PostgreSQL paroli |
+| `DB_HOST` | Baza manzili (standart: `localhost`) |
+| `DB_PORT` | Baza porti (standart: `5432`) |
+| `ALLOWED_ORIGINS` | Frontend manzili (CORS) |
+| `GEMINI_API_KEY` | Google Gemini API kaliti — [aistudio.google.com](https://aistudio.google.com/app/apikey) |
+| `GEMINI_MODEL` | Gemini modeli (standart: `gemini-2.0-flash`) |
+| `DJANGO_SETTINGS_MODULE` | `config.settings.development` |
 
-## Features
+### `frontend/.env`
 
-- **Program selection** — 7 international scholarships and universities
-- **Document checklist** — track required documents with one-click status toggle
-- **Match score** — 5-criteria scoring: GPA, Language, Experience, Essay, Recommendation
-- **Essay analyzer** — AI-powered analysis with 🔴🟡🟢 inline annotations in Uzbek
+| O'zgaruvchi | Tavsif |
+|---|---|
+| `VITE_API_URL` | Backend API manzili (`http://localhost:8000/api`) |
+| `VITE_APP_NAME` | Ilova nomi |
+
+## API endpointlari
+
+```
+POST   /api/auth/register/          — Ro'yxatdan o'tish
+POST   /api/auth/login/             — Kirish (JWT)
+POST   /api/auth/token/refresh/     — Tokenni yangilash
+GET    /api/auth/me/                — Joriy foydalanuvchi
+PATCH  /api/auth/me/update/         — Profilni yangilash
+POST   /api/auth/upgrade/           — Premium tarifga o'tish
+POST   /api/auth/buy-credits/       — Kredit sotib olish
+
+GET    /api/programs/               — Dasturlar ro'yxati
+GET    /api/programs/:id/           — Dastur tafsilotlari
+
+GET    /api/applications/           — Arizalar ro'yxati
+POST   /api/applications/           — Yangi ariza
+PATCH  /api/applications/documents/:id/  — Hujjat yangilash / fayl yuklash
+
+POST   /api/ai/analyze/             — Esse tahlili (1 kredit)
+GET    /api/ai/my-essays/           — Esse tarixi
+POST   /api/ai/score/               — Ariza ballini hisoblash
+```
+
+## Loyiha tuzilmasi
+
+```
+admitly/
+├── backend/
+│   ├── apps/
+│   │   ├── accounts/     # Foydalanuvchi modeli, JWT, kredit tizimi
+│   │   ├── programs/     # Grant/universitet modeli va fixture
+│   │   ├── applications/ # Ariza va hujjat modeli
+│   │   └── ai/           # Gemini integratsiyasi, esse tahlili
+│   ├── config/           # Django sozlamalari
+│   └── core/             # Permissions, pagination, exception handler
+└── frontend/
+    └── src/
+        ├── api/          # Axios client, API funksiyalari
+        ├── components/   # UI komponentlari
+        ├── hooks/        # TanStack Query hooks
+        ├── pages/        # Sahifalar
+        └── store/        # Zustand state (auth, application)
+```
