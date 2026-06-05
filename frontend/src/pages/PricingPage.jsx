@@ -50,13 +50,13 @@ export default function PricingPage() {
   const isPending = upgradeMutation.isPending || buyMutation.isPending
 
   const modalTitle = modal === 'upgrade'
-    ? 'Premium tarif — $9.99/oy'
+    ? 'Premium tarif — $19.99/oy'
     : `${modal} kredit sotib olish`
   const modalSub = modal === 'upgrade'
     ? '100 kredit / oy · AI tahlil chegirasiz'
     : CREDIT_PACKS.find((p) => p.amount === modal)?.price || ''
   const modalPrice = modal === 'upgrade'
-    ? '$9.99'
+    ? '$19.99'
     : CREDIT_PACKS.find((p) => p.amount === modal)?.price || ''
 
   return (
@@ -117,7 +117,7 @@ export default function PricingPage() {
                 <Zap size={16} className="text-amber-500" />
               </div>
               <p className="text-3xl font-bold text-gray-900 mt-1">
-                $9.99 <span className="text-sm font-normal text-gray-500">/oy</span>
+                $19.99 <span className="text-sm font-normal text-gray-500">/oy</span>
               </p>
             </CardHeader>
             <CardContent className="space-y-4">
