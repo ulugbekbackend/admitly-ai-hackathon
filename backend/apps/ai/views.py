@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.utils.decorators import method_decorator
 from django_ratelimit.decorators import ratelimit
 from rest_framework import status
@@ -5,11 +6,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.accounts.models import CustomUser
 from apps.applications.models import Application
 from .services.essay_analyzer import analyze_essay
 from .services.document_scorer import calculate_match_score
 from .models import EssayAnalysis
-from .serializers import EssayAnalysisSerializer
+from .serializers import EssayAnalysisSerializer, EssayAnalysisListSerializer
 
 ESSAY_CREDIT_COST = 1
 
@@ -75,7 +77,22 @@ class AnalyzeEssayView(APIView):
             )
 
         user = request.user
-        if user.credits < ESSAY_CREDIT_COST:
+
+        try:
+            application = Application.objects.get(pk=application_id, user=user)
+        except Application.DoesNotExist:
+            return Response(
+                {'error': True, 'detail': 'Ariza topilmadi.'},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        # Atomically deduct credit — prevents race conditions with concurrent requests
+        deducted = CustomUser.objects.filter(
+            pk=user.pk, credits__gte=ESSAY_CREDIT_COST
+        ).update(credits=F('credits') - ESSAY_CREDIT_COST)
+
+        if not deducted:
+            user.refresh_from_db(fields=['credits'])
             return Response(
                 {
                     'error': True,
@@ -87,20 +104,13 @@ class AnalyzeEssayView(APIView):
             )
 
         try:
-            application = Application.objects.get(pk=application_id, user=user)
-        except Application.DoesNotExist:
-            return Response(
-                {'error': True, 'detail': 'Ariza topilmadi.'},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-
-        try:
             analysis = analyze_essay(application, essay_text)
         except Exception as e:
+            # Refund credit if AI call fails
+            CustomUser.objects.filter(pk=user.pk).update(credits=F('credits') + ESSAY_CREDIT_COST)
             return _gemini_error_response(e)
 
-        user.deduct_credit()
-
+        user.refresh_from_db(fields=['credits'])
         data = EssayAnalysisSerializer(analysis).data
         data['credits_remaining'] = user.credits
         return Response(data, status=status.HTTP_201_CREATED)
@@ -113,7 +123,6 @@ class MyEssaysView(APIView):
         analyses = EssayAnalysis.objects.filter(
             application__user=request.user
         ).select_related('application__program').order_by('-created_at')
-        from .serializers import EssayAnalysisListSerializer
         return Response(EssayAnalysisListSerializer(analyses, many=True).data)
 
 

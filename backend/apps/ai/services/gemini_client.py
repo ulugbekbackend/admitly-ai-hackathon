@@ -1,6 +1,10 @@
+import time
+
 from google import genai
 from google.genai import types
 from decouple import config
+
+GEMINI_MODEL = config('GEMINI_MODEL', default='gemini-2.0-flash')
 
 _client = None
 
@@ -19,7 +23,7 @@ def call_gemini(system_prompt: str, user_message: str, max_retries: int = 2) -> 
     for attempt in range(max_retries + 1):
         try:
             response = client.models.generate_content(
-                model='gemini-flash-latest',
+                model=GEMINI_MODEL,
                 contents=user_message,
                 config=types.GenerateContentConfig(
                     system_instruction=system_prompt,
@@ -32,7 +36,6 @@ def call_gemini(system_prompt: str, user_message: str, max_retries: int = 2) -> 
             last_error = e
             error_str = str(e).lower()
             if ('quota' in error_str or '429' in error_str or 'rate' in error_str) and attempt < max_retries:
-                import time
                 time.sleep(2 ** attempt)
                 continue
             if attempt < max_retries:
