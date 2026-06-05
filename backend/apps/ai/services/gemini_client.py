@@ -4,7 +4,7 @@ from google import genai
 from google.genai import types
 from decouple import config
 
-GEMINI_MODEL = config('GEMINI_MODEL', default='gemini-2.0-flash')
+GEMINI_MODEL = config('GEMINI_MODEL', default='gemini-flash-latest')
 
 _client = None
 
