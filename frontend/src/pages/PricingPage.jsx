@@ -9,9 +9,9 @@ import { authApi } from '@/api/auth'
 import PaymentModal from '@/components/pricing/PaymentModal'
 
 const CREDIT_PACKS = [
-  { amount: 10, label: '10 kredit', price: '9 900 soʻm', desc: 'Bir necha esse uchun' },
-  { amount: 20, label: '20 kredit', price: '17 900 soʻm', badge: 'Mashhur', desc: 'Eng ommabop' },
-  { amount: 50, label: '50 kredit', price: '39 900 soʻm', desc: "Ko'p esse uchun" },
+  { amount: 10, label: '10 kredit', price: '$2.99', desc: 'Bir necha esse uchun' },
+  { amount: 25, label: '25 kredit', price: '$5.99', badge: 'Mashhur', desc: 'Eng ommabop' },
+  { amount: 50, label: '50 kredit', price: '$9.99', desc: "Ko'p esse uchun" },
 ]
 
 // modal type: 'upgrade' | { amount: number }

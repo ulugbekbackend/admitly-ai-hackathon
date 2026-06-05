@@ -64,7 +64,7 @@ class BuyCreditsView(APIView):
     def post(self, request):
         user = request.user
         amount = int(request.data.get('amount', 10))
-        if amount not in (10, 20, 50):
+        if amount not in (10, 25, 50):
             return Response({'detail': "Noto'g'ri kredit miqdori."}, status=status.HTTP_400_BAD_REQUEST)
         user.credits += amount
         user.save(update_fields=['credits'])

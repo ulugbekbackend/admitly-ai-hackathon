@@ -66,7 +66,7 @@ export default function LandingPage() {
 
       {/* ── Navbar ─────────────────────────────────────────── */}
       <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-gray-100 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center">
               <Sparkles size={14} className="text-white" />
@@ -87,12 +87,12 @@ export default function LandingPage() {
       </nav>
 
       {/* ── Hero ───────────────────────────────────────────── */}
-      <section className="relative pt-20 pb-24 px-4 overflow-hidden">
+      <section className="relative pt-20 pb-24 px-6 overflow-hidden">
         {/* Background blobs */}
         <div className="absolute -top-32 -right-32 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-60 pointer-events-none" />
         <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-indigo-100 rounded-full blur-3xl opacity-50 pointer-events-none" />
 
-        <div className="relative max-w-4xl mx-auto text-center">
+        <div className="relative max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 text-blue-700 text-xs font-semibold px-4 py-2 rounded-full mb-8 shadow-sm">
             <Zap size={12} className="text-blue-500" />
             O'zbekiston talabalariga maxsus · Bepul boshlang
@@ -136,7 +136,7 @@ export default function LandingPage() {
         </div>
 
         {/* Mock UI preview */}
-        <div className="relative max-w-3xl mx-auto mt-14">
+        <div className="relative max-w-4xl mx-auto mt-14">
           <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
             {/* Fake browser bar */}
             <div className="bg-gray-50 border-b border-gray-100 px-4 py-3 flex items-center gap-2">
@@ -186,8 +186,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Stats ──────────────────────────────────────────── */}
-      <section className="py-10 bg-gradient-to-r from-blue-600 to-indigo-600 px-4">
-        <div className="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-white text-center">
+      <section className="py-10 bg-gradient-to-r from-blue-600 to-indigo-600 px-6">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-white text-center">
           {STATS.map(({ value, label }) => (
             <div key={label}>
               <div className="text-3xl font-extrabold">{value}</div>
@@ -198,8 +198,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Features ───────────────────────────────────────── */}
-      <section className="py-20 px-4 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-20 px-6 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-xs font-semibold text-blue-600 uppercase tracking-widest mb-2">Xususiyatlar</p>
             <h2 className="text-3xl font-bold text-gray-900">Nima uchun Admitly?</h2>
@@ -222,8 +222,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── How it works ───────────────────────────────────── */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto">
+      <section className="py-20 px-6">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-xs font-semibold text-indigo-600 uppercase tracking-widest mb-2">Jarayon</p>
             <h2 className="text-3xl font-bold text-gray-900">3 qadamda natijaga</h2>
@@ -250,8 +250,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Programs ───────────────────────────────────────── */}
-      <section className="py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-5xl mx-auto">
+      <section className="py-16 px-6 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
             <p className="text-xs font-semibold text-amber-600 uppercase tracking-widest mb-2">Dasturlar</p>
             <h2 className="text-3xl font-bold text-gray-900">Jahonning eng nufuzli grantlari</h2>
@@ -284,8 +284,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Testimonial ────────────────────────────────────── */}
-      <section className="py-16 px-4">
-        <div className="max-w-3xl mx-auto">
+      <section className="py-16 px-6">
+        <div className="max-w-4xl mx-auto">
           <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 sm:p-12 text-white text-center shadow-2xl shadow-blue-200 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2" />
@@ -312,8 +312,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Final CTA ──────────────────────────────────────── */}
-      <section className="py-20 px-4 text-center bg-gray-50">
-        <div className="max-w-2xl mx-auto">
+      <section className="py-20 px-6 text-center bg-gray-50">
+        <div className="max-w-3xl mx-auto">
           <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-blue-200">
             <Sparkles size={28} className="text-white" />
           </div>
@@ -340,8 +340,8 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ─────────────────────────────────────────── */}
-      <footer className="border-t border-gray-100 py-6 px-4">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+      <footer className="border-t border-gray-100 py-6 px-6">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-md bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center">
               <Sparkles size={12} className="text-white" />
