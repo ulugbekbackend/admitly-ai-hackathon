@@ -1,61 +1,63 @@
 # Admitly — AI Grant Assistant
 
-> O'zbek talabalari uchun xalqaro grant va universitetlarga ariza topshirishni osonlashtiradigan AI yordamchi platforma.
+> An AI-powered platform that simplifies applying to international scholarships and universities for students from Uzbekistan.
 
-## Muammo va Yechim
+## Problem & Solution
 
-O'zbekistonda har yili minglab talabalar xalqaro grant va universitetlarga ariza topshirishga harakat qiladi. Ammo bu jarayon juda murakkab:
+Every year, thousands of students in Uzbekistan try to apply for international scholarships and universities. However, the process is very complicated:
 
-- Qaysi dasturga mos ekanligini bilmaydilar
-- Qanday hujjatlar kerakligini aniqlay olmaydilar
-- Esse yozishda qayerda xato qilayotganini tushunmaydilar
-- Har bir dastur uchun talablar boshqacha bo'ladi
+- They don't know which program they are eligible for
+- They cannot determine which documents are required
+- They don't understand where they are making mistakes in their essays
+- Every program has different requirements
 
-**Admitly** shu muammoni hal qiladi — talabaning profili (GPA, IELTS, tajriba) asosida dasturlarga mos kelish darajasini hisoblaydi, hujjatlar ro'yxatini avtomatik tuzadi va esseni AI orqali tahlil qilib, aniq kamchilik va kuchli tomonlarni ko'rsatadi.
+**Admitly** solves this problem by calculating a student's eligibility based on their profile (GPA, IELTS, experience), automatically generating a required document checklist, and analyzing essays with AI to highlight strengths and weaknesses.
 
-## Texnologiyalar
+## Technologies
 
-| Qatlam | Stack |
+| Layer | Stack |
 |---|---|
 | Frontend | React 19, Vite 6, TailwindCSS v4, TanStack Query v5, Zustand, shadcn/ui |
 | Backend | Django 5.2, Django REST Framework, SimpleJWT |
 | AI | Google Gemini 2.0 Flash |
 | Database | PostgreSQL |
 
-## Asosiy imkoniyatlar
+## Key Features
 
-### Foydalanuvchi uchun
-- **Dasturlar katalogi** — 7 ta xalqaro grant va universitetlar ro'yxati: DAAD, Chevening, Fulbright, Erasmus+ va boshqalar. Filtr (grant/universitet), qidiruv, deadline hisoblagich
-- **Profil va ball** — GPA, IELTS, ish tajribasi kiritiladi; tizim avtomatik mos kelish foizini hisoblaydi
-- **Ariza va hujjat checklisti** — dasturga ariza yaratiladi, kerakli hujjatlar ro'yxati avtomatik tuziladi, fayl yuklash (PDF/DOCX)
-- **AI esse tahlili** — esse matnini kiritasiz, Gemini AI o'zbek tilida tahlil qiladi: umumiy ball (0–100), inline rangli izohlar (🔴 jiddiy, 🟡 tavsiya, 🟢 kuchli), yetishmayotgan elementlar, umumiy xulosa
-- **Esse tarixi** — barcha tahlillar saqlanib, istalgan vaqt ko'rib chiqiladi
-- **Kredit tizimi** — ro'yxatdan o'tishda 5 ta bepul kredit; Premium (100 kredit/oy) yoki kredit to'plamlari sotib olish imkoniyati
+### For Users
 
-### Texnik
-- REST API bilan to'liq ajratilgan arxitektura (Django + React)
-- JWT autentifikatsiya: access token (1 soat) + refresh token (7 kun), avtomatik yangilash
-- Gemini API ga parallel so'rovlarda kredit sarfi race condition dan himoyalangan (atomic F() update)
-- Fayl yuklash: `multipart/form-data`, 10 MB chegara, PDF/DOC/DOCX validatsiya
-- Rate limiting: esse tahlili 30 marta/kun (foydalanuvchi bo'yicha)
-- Barcha sahifalar responsive dizayn
+- **Programs Catalog** — A list of 7 international scholarships and universities including DAAD, Chevening, Fulbright, Erasmus+, and more. Includes filtering (scholarship/university), search, and deadline countdown.
+- **Profile & Score** — Users enter their GPA, IELTS score, and work experience; the system automatically calculates their eligibility percentage.
+- **Application & Document Checklist** — Create applications, automatically generate the required document checklist, and upload files (PDF/DOCX).
+- **AI Essay Analysis** — Paste your essay and Gemini AI analyzes it in Uzbek, providing an overall score (0–100), inline color-coded comments (🔴 critical, 🟡 recommendation, 🟢 strength), missing elements, and an overall conclusion.
+- **Essay History** — All analyses are saved and can be reviewed anytime.
+- **Credit System** — New users receive 5 free credits. Premium users get 100 credits/month, with additional credit packages available for purchase.
 
-## Ishga tushirish
+### Technical
 
-### Talablar
+- Fully separated REST API architecture (Django + React)
+- JWT authentication: access token (1 hour) + refresh token (7 days) with automatic refresh
+- Credit deduction for parallel Gemini API requests is protected against race conditions using atomic `F()` updates
+- File uploads via `multipart/form-data`, 10 MB limit, PDF/DOC/DOCX validation
+- Rate limiting: Essay analysis is limited to 30 requests per user per day
+- Fully responsive design across all pages
+
+## Getting Started
+
+### Requirements
 
 - Python 3.10+
 - Node.js 18+
 - PostgreSQL 14+
 
-### 1. Reponi klonlash
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/ulugbekbackend/admitly-ai-hackathon.git
 cd admitly-ai-hackathon
 ```
 
-### 2. Backend sozlash
+### 2. Backend Setup
 
 ```bash
 cd backend
@@ -64,14 +66,14 @@ source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-`.env` faylini yaratish:
+Create a `.env` file:
 
 ```bash
 cp .env.example .env
-# .env faylini oching va DB ma'lumotlari hamda GEMINI_API_KEY ni kiriting
+# Open the .env file and configure your database credentials and GEMINI_API_KEY
 ```
 
-Ma'lumotlar bazasini yaratish va migratsiyalarni ishga tushirish:
+Create the database and run migrations:
 
 ```bash
 psql -U postgres -c "CREATE DATABASE admitly_db;"
@@ -79,7 +81,7 @@ python manage.py migrate
 python manage.py loaddata apps/programs/fixtures/programs.json
 ```
 
-### 3. Frontend sozlash
+### 3. Frontend Setup
 
 ```bash
 cd ../frontend
@@ -87,120 +89,119 @@ npm install
 cp .env.example .env
 ```
 
-### 4. Ishga tushirish
+### 4. Run the Project
 
 ```bash
-# Frontend va backend bir vaqtda (frontend papkasidan)
+# Run frontend and backend together (from the frontend directory)
 npm run dev:all
 ```
 
-Yoki alohida:
+Or run them separately:
 
 ```bash
 # Backend
 cd backend && python manage.py runserver
 
-# Frontend (yangi terminal)
+# Frontend (new terminal)
 cd frontend && npm run dev
 ```
 
-| Xizmat | URL |
+| Service | URL |
 |---|---|
 | Frontend | http://localhost:5173 |
 | Backend API | http://localhost:8000/api |
-| Admin panel | http://localhost:8000/admin |
+| Admin Panel | http://localhost:8000/admin |
 
-## Muhit o'zgaruvchilari
+## Environment Variables
 
 ### `backend/.env`
 
-| O'zgaruvchi | Tavsif |
+| Variable | Description |
 |---|---|
-| `SECRET_KEY` | Django maxfiy kalit (`python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`) |
-| `DEBUG` | `True` (development uchun) |
-| `DB_NAME` | PostgreSQL ma'lumotlar bazasi nomi |
-| `DB_USER` | PostgreSQL foydalanuvchi nomi |
-| `DB_PASSWORD` | PostgreSQL paroli |
-| `DB_HOST` | Baza manzili (standart: `localhost`) |
-| `DB_PORT` | Baza porti (standart: `5432`) |
-| `ALLOWED_ORIGINS` | Frontend manzili (CORS) |
-| `GEMINI_API_KEY` | Google Gemini API kaliti — [aistudio.google.com](https://aistudio.google.com/app/apikey) |
-| `GEMINI_MODEL` | Gemini modeli (standart: `gemini-2.0-flash`) |
+| `SECRET_KEY` | Django secret key (`python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`) |
+| `DEBUG` | `True` (for development) |
+| `DB_NAME` | PostgreSQL database name |
+| `DB_USER` | PostgreSQL username |
+| `DB_PASSWORD` | PostgreSQL password |
+| `DB_HOST` | Database host (default: `localhost`) |
+| `DB_PORT` | Database port (default: `5432`) |
+| `ALLOWED_ORIGINS` | Frontend URL (CORS) |
+| `GEMINI_API_KEY` | Google Gemini API key — https://aistudio.google.com/app/apikey |
+| `GEMINI_MODEL` | Gemini model (default: `gemini-2.0-flash`) |
 | `DJANGO_SETTINGS_MODULE` | `config.settings.development` |
 
 ### `frontend/.env`
 
-| O'zgaruvchi | Tavsif |
+| Variable | Description |
 |---|---|
-| `VITE_API_URL` | Backend API manzili (`http://localhost:8000/api`) |
-| `VITE_APP_NAME` | Ilova nomi |
+| `VITE_API_URL` | Backend API URL (`http://localhost:8000/api`) |
+| `VITE_APP_NAME` | Application name |
 
-## API endpointlari
+## API Endpoints
 
+```text
+POST   /api/auth/register/               — Register
+POST   /api/auth/login/                  — Login (JWT)
+POST   /api/auth/token/refresh/          — Refresh token
+GET    /api/auth/me/                     — Current user
+PATCH  /api/auth/me/update/              — Update profile
+POST   /api/auth/upgrade/                — Upgrade to Premium
+POST   /api/auth/buy-credits/            — Purchase credits
+
+GET    /api/programs/                    — List programs
+GET    /api/programs/:id/                — Program details
+
+GET    /api/applications/                — List applications
+POST   /api/applications/                — Create application
+PATCH  /api/applications/documents/:id/  — Update document / upload file
+
+POST   /api/ai/analyze/                  — Analyze essay (1 credit)
+GET    /api/ai/my-essays/                — Essay history
+POST   /api/ai/score/                    — Calculate application score
 ```
-POST   /api/auth/register/          — Ro'yxatdan o'tish
-POST   /api/auth/login/             — Kirish (JWT)
-POST   /api/auth/token/refresh/     — Tokenni yangilash
-GET    /api/auth/me/                — Joriy foydalanuvchi
-PATCH  /api/auth/me/update/         — Profilni yangilash
-POST   /api/auth/upgrade/           — Premium tarifga o'tish
-POST   /api/auth/buy-credits/       — Kredit sotib olish
 
-GET    /api/programs/               — Dasturlar ro'yxati
-GET    /api/programs/:id/           — Dastur tafsilotlari
+## Project Structure
 
-GET    /api/applications/           — Arizalar ro'yxati
-POST   /api/applications/           — Yangi ariza
-PATCH  /api/applications/documents/:id/  — Hujjat yangilash / fayl yuklash
-
-POST   /api/ai/analyze/             — Esse tahlili (1 kredit)
-GET    /api/ai/my-essays/           — Esse tarixi
-POST   /api/ai/score/               — Ariza ballini hisoblash
-```
-
-## Loyiha tuzilmasi
-
-```
+```text
 admitly/
 ├── backend/
 │   ├── apps/
-│   │   ├── accounts/     # Foydalanuvchi modeli, JWT, kredit tizimi
-│   │   ├── programs/     # Grant/universitet modeli va fixture
-│   │   ├── applications/ # Ariza va hujjat modeli, fayl yuklash
-│   │   └── ai/           # Gemini integratsiyasi, esse tahlili servisi
-│   ├── config/           # Django sozlamalari (split: base/dev/prod)
+│   │   ├── accounts/     # User model, JWT, credit system
+│   │   ├── programs/     # Scholarship/university models and fixtures
+│   │   ├── applications/ # Applications, document models, file uploads
+│   │   └── ai/           # Gemini integration and essay analysis service
+│   ├── config/           # Django settings (split: base/dev/prod)
 │   └── core/             # IsOwner permission, pagination, exception handler
 └── frontend/
     └── src/
-        ├── api/          # Axios client (JWT interceptor), API funksiyalari
+        ├── api/          # Axios client (JWT interceptor), API functions
         ├── components/   # UI: layout, checklist, essay, dashboard, pricing
         ├── hooks/        # TanStack Query hooks (server state)
-        ├── pages/        # Sahifalar: Landing, Dashboard, Programs, Essay...
+        ├── pages/        # Pages: Landing, Dashboard, Programs, Essay...
         └── store/        # Zustand: auth token, active application
-
 ```
 
-## Qo'llanilgan dasturlar (Fixture)
+## Included Programs (Fixture)
 
-| Dastur | Mamlakat | Tur |
+| Program | Country | Type |
 |---|---|---|
-| DAAD Research Grant | Germaniya | Grant |
-| Chevening Scholarship | Buyuk Britaniya | Grant |
-| Fulbright Program | AQSh | Grant |
-| Erasmus+ | Yevropa | Grant |
-| Bologna University | Italiya | Universitet |
-| University of Warsaw | Polsha | Universitet |
-| Nazarbayev University | Qozog'iston | Universitet |
+| DAAD Research Grant | Germany | Scholarship |
+| Chevening Scholarship | United Kingdom | Scholarship |
+| Fulbright Program | United States | Scholarship |
+| Erasmus+ | Europe | Scholarship |
+| Bologna University | Italy | University |
+| University of Warsaw | Poland | University |
+| Nazarbayev University | Kazakhstan | University |
 
-## Skrinshot
+## Screenshots
 
-| Sahifa | Tavsif |
+| Page | Description |
 |---|---|
-| Landing | Loyiha taqdimoti, kirish/ro'yxat tugmalari |
-| Dashboard | Mos kelish bali, hujjat holati, vazifalar |
-| Dasturlar | Katalog, filtr, qidiruv, deadline |
-| Hujjatlar | Checklist, fayl yuklash, holat o'zgartirish |
-| Esse tahlili | Matn kiritish, AI tahlil, rangli izohlar |
-| Mening esseylarim | Tarix, batafsil natijalar |
-| Tariflar | Free/Premium, kredit to'plamlari |
-| Profil | GPA, IELTS, tajriba, ism |
+| Landing | Project introduction with Login/Register buttons |
+| Dashboard | Eligibility score, document progress, and tasks |
+| Programs | Catalog, filtering, search, and deadlines |
+| Documents | Checklist, file upload, and status management |
+| Essay Analysis | Essay input, AI analysis, and color-coded feedback |
+| My Essays | Analysis history and detailed results |
+| Pricing | Free/Premium plans and credit packages |
+| Profile | GPA, IELTS, experience, and personal information |
